@@ -27,7 +27,9 @@
 
         body
         {
-            background-color: #e6f0fc;
+            background: rgb(148,187,233);
+            background: linear-gradient(180deg, rgba(148,187,233,1) 0%, rgba(238,174,202,1) 100%);
+
             height: 100vh; /* تغطية كامل ارتفاع الصفحة */
             margin: 0; /* إزالة الهوامش */
         
@@ -62,33 +64,17 @@
             border-radius: 20px;
         }
 
-
-        .container::after {
-            content: "";
-            position: absolute;
-            top: 50px; /* موقع ثابت */
-            right: 260px; /* موقع ثابت */
-            width: 100px; /* حجم ثابت */
-            height: 200px; /* حجم ثابت */
-            background-color: #2e6aad;
-            z-index: -1;
-            border-top-left-radius: 200px;
-            border-top-right-radius: 80px;
-            border-bottom-left-radius: 200px;
-            border-bottom-right-radius: 80px;
-        }
-
-        .container::before {
+        /* .container::before {
             content: "";
             position: absolute;
             top: 50px;
-            right: 260px;
+            right: 262px;
             width: 845px;
             height: 200px;
             background-color: #eeaeca;
             z-index: -2;
             border-radius: 30px;
-        }
+        }  */
 
         .header{
             font-family: "Rakkas", serif;
