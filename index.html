@@ -73,9 +73,9 @@
             background-color: #2e6aad;
             z-index: -1;
             border-top-left-radius: 200px;
-            border-top-right-radius: 60px;
+            border-top-right-radius: 80px;
             border-bottom-left-radius: 200px;
-            border-bottom-right-radius: 60px;
+            border-bottom-right-radius: 80px;
         }
 
         .container::before {
@@ -146,7 +146,7 @@
             background-color: #f9f9f9; /* لون الخلفية أثناء التركيز */
             outline: none;
         }
-        #ok-button, #ok-button2, #cancel-button, #cancel-button2, #edit-task-ok-button, #edit-task-cancel-button {
+        #ok-button, #ok-button2, #cancel-button, #cancel-button2, #edit-task-ok-button, #edit-task-cancel-button , #close-error-modal{
             padding: 7px;
             background-color:#eeaeca ;
             color: white;
@@ -156,7 +156,7 @@
             margin: 5px; 
         }
 
-        #ok-button:hover, #ok-button2:hover, #cancel-button:hover, #cancel-button2:hover, #edit-task-ok-button:hover, #edit-task-cancel-button:hover  {
+        #ok-button:hover, #ok-button2:hover, #cancel-button:hover, #cancel-button2:hover, #edit-task-ok-button:hover, #edit-task-cancel-button:hover ,#close-error-modal:hover {
             background-color: #f7d8e5; /* التفاعل مع التمرير على الزر */
         }
 
@@ -202,6 +202,14 @@
                             <input type="text" id="task-name" placeholder="اسم المهمة" style="color:black;  caret-color:black;">
                             <button id="ok-button">اضافة</button>
                             <button id="cancel-button">إلغاء</button> <!-- زر الإلغاء -->
+                        </div>
+                        
+                    </div>
+
+                    <div id="error-modal" class="modal">
+                        <div class="modal-content">
+                            <p>من فضلك ادخل اسم المهمة:</p>
+                            <button id="close-error-modal" class="ok-button">ok</button>
                         </div>
                     </div>
                 </div>
@@ -450,7 +458,9 @@
         // إغلاق النافذة بعد إضافة المهمة
         document.getElementById("modal").style.display = "none";
     } else {
-        alert("من فضلك، أدخل اسم المهمة.");
+        // alert("من فضلك، أدخل اسم المهمة.");
+             // إظهار النافذة المنبثقة
+        document.getElementById("error-modal").style.display = "flex";
     }
     document.getElementById("task-name").value = ""
 });
@@ -458,6 +468,11 @@
     document.getElementById("cancel-button").addEventListener("click", function() {
     document.getElementById("modal").style.display = "none"; // إخفاء النافذة
     document.getElementById("task-name").value = ""; // تفريغ الحقل
+});
+
+// إغلاق النافذة عند الضغط على زر "ok"
+document.getElementById("close-error-modal").addEventListener("click", function() {
+    document.getElementById("error-modal").style.display = "none";
 });
 
 //delete function
