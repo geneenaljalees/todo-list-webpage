@@ -1,614 +1,237 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>To-Do-List</title>
     <!--External libraries-->
     <!--jquery library-->
-    <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.slim.min.js"
+      integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8="
+      crossorigin="anonymous"
+    ></script>
     <!--anime library-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
     <!--google fonts-->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Rakkas&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Rakkas&family=Scheherazade+New:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Beiruti:wght@200..900&family=Rakkas&family=Scheherazade+New:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rakkas&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rakkas&family=Scheherazade+New:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Beiruti:wght@200..900&family=Rakkas&family=Scheherazade+New:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <!--google icons-->
     <!--Google Material Icons-->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
 
-    <style>
-
-        body
-        {
-            background: rgb(190, 215, 243);
-            /* background: linear-gradient(180deg, rgba(148,187,233,1) 0%, rgba(238,174,202,1) 100%); */
-
-            height: 100vh; /* تغطية كامل ارتفاع الصفحة */
-            margin: 0; /* إزالة الهوامش */
-        
-        }
-        .task{
-            display: flex;
-            background-color: white;
-            padding: 5px;
-            border-top: 1px solid rgb(172, 172, 172);
-            border-bottom: 1px solid rgb(172, 172, 172);
-            transition: box-shadow 0.2s;
-            /* font-family: "Scheherazade New", serif; */
-            font-family: "Beiruti", sans-serif;
-            
-        }
-
-        .done{
-            background-color: rgb(158,253,160);
-        }
-        .task:hover{
-            box-shadow: 0px 3px 15px rgba(97,97,97,0.843);
-        }
-        .container {
-            position: relative; 
-        }
-
-        .table-task {
-            position: relative; 
-            width: 60%;
-            background-color: rgb(255, 255, 255);
-            margin-top: 70px;
-            z-index: 1; 
-            border-radius: 20px;
-        }
-
-        .container::before {
-            content: "";
-            position: absolute;
-            top: 50px;
-            right: 262px;
-            width: 845px;
-            height: 150px;
-            background-color: #eeaeca;
-            z-index: -2;
-            border-radius: 30px;
-        } 
-        
-        .container::after {
-            content: "";
-            position: absolute;
-            top: 97px;
-            right: 263px;
-            width: 200px;
-            height: 100px;
-            background-color:  #145da0;
-            z-index: -2;
-            border-radius: 30px;
-            border: 1px solid #eeaeca ;
-        } 
-
-
-        .header{
-            font-family: "Rakkas", serif;
-            font-weight: 400;
-            font-style: normal;
-        }
-        
-        button{
-            border: none;
-            font-size: 20px;
-            box-shadow: 0px 3px 5px rgba(168,168,168,0.38);
-        }
-        button.circular{
-            width:40px;
-            height: 40px;
-            border-radius: 50%;
-            line-height: 0;
-            
-        }
-        svg{
-            width:20px;
-            height: 20px;
-        }
-
-        /* تنسيق النافذة المخصصة */
-        .modal, .modal2 ,.modal2 {
-            display: none; /* إخفاء النافذة بشكل افتراضي */
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-content, .modal-content2,  .modal-content3 {
-            background-color: white;
-            border-radius: 8px;
-            text-align: center;
-            padding: 30px;
-        }
-
-
-        #task-name {
-            padding: 10px;
-            margin-top: 10px; 
-            margin-bottom: 10px; 
-            width: 90%;
-            border: 1px solid rgb(207, 207, 207); /* إطار بلون مخصص أثناء التركيز */
-        }
-        #task-name:focus {
-            border: 1px solid rgb(207, 207, 207); /* إطار بلون مخصص أثناء التركيز */
-            background-color: #f9f9f9; /* لون الخلفية أثناء التركيز */
-            outline: none;
-        }
-        #ok-button, #ok-button2, #cancel-button, #cancel-button2, #edit-task-ok-button, #edit-task-cancel-button , #close-error-modal{
-            padding: 7px;
-            background-color:#eeaeca ;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 5px; 
-        }
-
-        #ok-button:hover, #ok-button2:hover, #cancel-button:hover, #cancel-button2:hover, #edit-task-ok-button:hover, #edit-task-cancel-button:hover ,#close-error-modal:hover {
-            background-color: #f7d8e5; /* التفاعل مع التمرير على الزر */
-        }
-
-        #edit-task-name {
-            padding: 10px;
-            margin-top: 10px;
-            margin-bottom: 10px;
-            width: 90%;
-            border: 1px solid rgb(207, 207, 207);
-        }
-
-        #edit-task-name:focus {
-            border: 1px solid rgb(207, 207, 207);
-            background-color: #f9f9f9;
-            outline: none;
-        }
-
-
-    </style>
-</head>
-
-<body>
+  <body>
     <!--Parent div-->
-    <!--اعطاء المحتوى بالكامل اتجاه من اليمين الى اليسار-->
-    <div style="direction: rtl;">
-        <!--Center div to center all contents-->
-        <div class="container" style="display: flex;justify-content: center;align-items: center;position: relative;">
-            <!--Table div-->
-            <div class="table-task">
-                <!--Header-->
-                <div  style="width: 100%;text-align: center;color: #eeaeca; "><!--100% من حجم الاب--> 
-                    <h1 class="header" style="display: inline-block;">مهامي</h1> <!--blok element لجعل أي عنصر بعده يظهر على نفس السطر لازم نحوله ل inline-->
-                    
-                    <!--هذا الزر له تنسيق سنحتاجه لازرار أخرى داخل المشروع لذلك حددناه بكلاس ليأخد التنسيق العام لشكل الزر -->
-                    <button id="add-button" class="circular" style="float: right;position: relative;right: 10px;top: 18px;border: 1px solid #eeaeca;">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                        </svg>
-                    </button>
-                    <div id="modal" class="modal">
-                        <div class="modal-content">
-                            <span>ادخل اسم المهمة:</span>
-                            <input type="text" id="task-name" placeholder="اسم المهمة" style="color:black;  caret-color:black;">
-                            <button id="ok-button">اضافة</button>
-                            <button id="cancel-button">إلغاء</button> <!-- زر الإلغاء -->
-                        </div>
-                        
-                    </div>
+    <div style="direction: rtl">
+      <!--Center div to center all contents-->
+      <div
+        class="container"
+        style="
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: relative;
+        "
+      >
+        <!--Table div-->
+        <div class="table-task">
+          <!--Header-->
+          <div style="width: 100%; text-align: center; color: #eeaeca">
+            <!--100% من حجم الاب-->
+            <h1 class="header" style="display: inline-block">مهامي</h1>
 
-                    <div id="error-modal" class="modal">
-                        <div class="modal-content">
-                            <p>من فضلك ادخل اسم المهمة:</p>
-                            <button id="close-error-modal" class="ok-button">ok</button>
-                        </div>
-                    </div>
-                </div>
-                <!--#Header#-->
-                <!--Tasks-->
-                <div id="tasks" style="padding: 10px;">
-                    <!--Task-->
-                    <div class="task">
-                        <!--task information-->
-                        <div style="width: 60%;">
-                            <h2 class="text">تحدي 30 يوم من قراءة سورة البقرة</h2>
-                            <!--div for time of task-->
-                            <div>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 2.994v2.25m10.5-2.25v2.25m-14.252 13.5V7.491a2.25 2.25 0 0 1 2.25-2.25h13.5a2.25 2.25 0 0 1 2.25 2.25v11.251m-18 0a2.25 2.25 0 0 0 2.25 2.25h13.5a2.25 2.25 0 0 0 2.25-2.25m-18 0v-7.5a2.25 2.25 0 0 1 2.25-2.25h13.5a2.25 2.25 0 0 1 2.25 2.25v7.5m-6.75-6h2.25m-9 2.25h4.5m.002-2.25h.005v.006H12v-.006Zm-.001 4.5h.006v.006h-.006v-.005Zm-2.25.001h.005v.006H9.75v-.006Zm-2.25 0h.005v.005h-.006v-.005Zm6.75-2.247h.005v.005h-.005v-.005Zm0 2.247h.006v.006h-.006v-.006Zm2.25-2.248h.006V15H16.5v-.005Z" />
-                                </svg>
-                                <span style="position: relative;bottom: 4px;">
-                                    10-12-2024.
-                                </span>
-
-                            </div>
-
-                        </div>
-                        <!--#task information#-->
-
-                        <!--task actions delete done edit-->
-                        <div class="delete-button"  style="display: flex;justify-content: space-between;align-items: center;width: 30%;">
-                            <button class="circular" style="border:2px solid blue;">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
-                                </svg>
-                            </button>
-                            <!-- قائمة منبثقة لتعديل المهمة -->
-                            <div id="modal-edit-task" class="modal3">
-                                <div class="modal-content3">
-                                    <span>الرجاء إدخال الاسم الجديد للمهمة:</span>
-                                    <input type="text" id="edit-task-name" placeholder="اسم المهمة الجديد">
-                                    <button id="edit-task-ok-button">تعديل</button>
-                                    <button id="edit-task-cancel-button">إلغاء</button>
-                                </div>
-                            </div>
-
-                            <button class="circular" style="border:2px solid green;">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-                                </svg>
-                            </button>
-
-
-                            <button class="circular" style="border:2px solid red;">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                                </svg>
-                            </button>
-
-                            <!-- قائمة منبثقة للحذف -->
-                            <div id="modal2" class="modal2">
-                                <div class="modal-content2">
-                                    <span>هل ترغب في حذف هذه المهمة؟</span>
-                                    <button id="ok-button2">نعم</button>
-                                    <button id="cancel-button2">إلغاء</button>
-                                </div>
-                            </div>
-
-                        </div>
-                        <!--#task actions delete done edit#-->
-                    </div>
-                    <!--#Task#-->
-                    </div>
-                </div>
-                <!--#Tasks#-->
+            <button
+              id="add-button"
+              class="circular"
+              style="
+                float: right;
+                position: relative;
+                right: 10px;
+                top: 18px;
+                border: 1px solid #eeaeca;
+              "
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="{1.5}"
+                stroke="currentColor"
+                className="size-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 4.5v15m7.5-7.5h-15"
+                />
+              </svg>
+            </button>
+            <div id="modal" class="modal">
+              <div class="modal-content">
+                <span>ادخل اسم المهمة:</span>
+                <input
+                  type="text"
+                  id="task-name"
+                  placeholder="اسم المهمة"
+                  style="color: black; caret-color: black"
+                />
+                <button id="ok-button">اضافة</button>
+                <button id="cancel-button">إلغاء</button>
+              </div>
             </div>
-            <!--#Table div#-->
+
+            <div id="error-modal" class="modal">
+              <div class="modal-content">
+                <p>من فضلك ادخل اسم المهمة:</p>
+                <button id="close-error-modal" class="ok-button">ok</button>
+              </div>
+            </div>
+          </div>
+          <!--#Header#-->
+          <!--Tasks-->
+          <div id="tasks" style="padding: 10px">
+            <!--Task-->
+            <div class="task">
+              <!--task information-->
+              <div style="width: 60%">
+                <h2 class="text">تحدي 30 يوم من قراءة سورة البقرة</h2>
+                <div>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="{1.5}"
+                    stroke="currentColor"
+                    className="size-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M6.75 2.994v2.25m10.5-2.25v2.25m-14.252 13.5V7.491a2.25 2.25 0 0 1 2.25-2.25h13.5a2.25 2.25 0 0 1 2.25 2.25v11.251m-18 0a2.25 2.25 0 0 0 2.25 2.25h13.5a2.25 2.25 0 0 0 2.25-2.25m-18 0v-7.5a2.25 2.25 0 0 1 2.25-2.25h13.5a2.25 2.25 0 0 1 2.25 2.25v7.5m-6.75-6h2.25m-9 2.25h4.5m.002-2.25h.005v.006H12v-.006Zm-.001 4.5h.006v.006h-.006v-.005Zm-2.25.001h.005v.006H9.75v-.006Zm-2.25 0h.005v.005h-.006v-.005Zm6.75-2.247h.005v.005h-.005v-.005Zm0 2.247h.006v.006h-.006v-.006Zm2.25-2.248h.006V15H16.5v-.005Z"
+                    />
+                  </svg>
+                  <span style="position: relative; bottom: 4px">
+                    10-12-2024.
+                  </span>
+                </div>
+              </div>
+              <!--#task information#-->
+
+              <!--task actions delete done edit-->
+              <div
+                class="delete-button"
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  width: 30%;
+                "
+              >
+                <button class="circular" style="border: 2px solid blue">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="{1.5}"
+                    stroke="currentColor"
+                    className="size-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"
+                    />
+                  </svg>
+                </button>
+                <div id="modal-edit-task" class="modal3">
+                  <div class="modal-content3">
+                    <span>الرجاء إدخال الاسم الجديد للمهمة:</span>
+                    <input
+                      type="text"
+                      id="edit-task-name"
+                      placeholder="اسم المهمة الجديد"
+                    />
+                    <button id="edit-task-ok-button">تعديل</button>
+                    <button id="edit-task-cancel-button">إلغاء</button>
+                  </div>
+                </div>
+
+                <button class="circular" style="border: 2px solid green">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="{1.5}"
+                    stroke="currentColor"
+                    className="size-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="m4.5 12.75 6 6 9-13.5"
+                    />
+                  </svg>
+                </button>
+
+                <button class="circular" style="border: 2px solid red">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="{1.5}"
+                    stroke="currentColor"
+                    className="size-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
+                    />
+                  </svg>
+                </button>
+
+                <div id="modal2" class="modal2">
+                  <div class="modal-content2">
+                    <span>هل ترغب في حذف هذه المهمة؟</span>
+                    <button id="ok-button2">نعم</button>
+                    <button id="cancel-button2">إلغاء</button>
+                  </div>
+                </div>
+              </div>
+              <!--#task actions delete done edit#-->
+            </div>
+            <!--#Task#-->
+          </div>
         </div>
-        <!--#Center div to center all contents#-->
+        <!--#Tasks#-->
+      </div>
+      <!--#Table div#-->
+    </div>
+    <!--#Center div to center all contents#-->
 
     <!--#Parent div#-->
-</body>
 
-<script>
-
-    
-    //تعريف مصفوفة تخزن بداخلها مجموعة من الكائنات كل كائن يعبر عن مهمة
-    //تمثيل برمجي سنقوم بترجمته الى تمثيل مرئي للمستخدم
-    let myTasks = [
-        {
-            "title": "قراءة كتب",
-            "date": "5-12-2024",
-            "isDone": true
-        },
-
-        {
-            "title": "انهاء المشروع ",
-            "date": "5-12-2024",
-            "isDone": false
-        },
-
-        {
-            "title": "انهاء الكورس",
-            "date": "5-12-2024",
-            "isDone": false
-        },
-
-    ]
-    console.log(myTasks)
-    //========================Local Storage========================
-    function getTasksFromStorage() {
-    // التحقق من وجود بيانات في localStorage
-    let tasks = localStorage.getItem("tasks");
-    if (tasks) {
-        return JSON.parse(tasks);  // تحويل البيانات إلى كائن إذا كانت موجودة
-    }
-    return [];  // إرجاع مصفوفة فارغة إذا لم توجد بيانات
-}
-
-    myTasks = getTasksFromStorage();
-    console.log(myTasks);  // يمكنك التحقق من البيانات المحفوظة
-
-
-    function fillTaskOnThePage(){
-    //تفريغ قائمة المهام ليتم تعبأتها بواسطة المستخدم
-    //التمثيل البرمجي للمصفوفة سنحوله الى واجهة رسوية ستظهر للمستخدم
-    document.getElementById("tasks").innerHTML = ""
-    let index = 0 //متغير سيمر كبراميتر الى الدالة لحذف العنصر المحدد 
-    for(task of myTasks){
-
-        let content = 
-            `
-                <!--Task-->
-                    <div class="task ${task.isDone?'done':''}">
-                    <!--task information-->
-                        <div style="width: 60%;">
-                            <h2 class="text">${task.title}</h2>
-                            <!--div for time of task-->
-                            <div>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 2.994v2.25m10.5-2.25v2.25m-14.252 13.5V7.491a2.25 2.25 0 0 1 2.25-2.25h13.5a2.25 2.25 0 0 1 2.25 2.25v11.251m-18 0a2.25 2.25 0 0 0 2.25 2.25h13.5a2.25 2.25 0 0 0 2.25-2.25m-18 0v-7.5a2.25 2.25 0 0 1 2.25-2.25h13.5a2.25 2.25 0 0 1 2.25 2.25v7.5m-6.75-6h2.25m-9 2.25h4.5m.002-2.25h.005v.006H12v-.006Zm-.001 4.5h.006v.006h-.006v-.005Zm-2.25.001h.005v.006H9.75v-.006Zm-2.25 0h.005v.005h-.006v-.005Zm6.75-2.247h.005v.005h-.005v-.005Zm0 2.247h.006v.006h-.006v-.006Zm2.25-2.248h.006V15H16.5v-.005Z" />
-                                </svg>
-                                
-                                <span style="position: relative;bottom: 4px;">
-                                    ${task.date}
-                                </span>
-
-                            </div>
-
-                        </div>
-                    <!--#task information#-->
-
-                    <!--task actions delete done edit-->
-                    <div class="delete-button"  style="display: flex;justify-content: space-between;align-items: center;width: 30%;">
-
-                            <button onclick="editTask(${index})" class="circular" style="border:2px solid blue;">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
-                                </svg>
-                                
-                            </button>
-
-                            <!-- قائمة منبثقة لتعديل المهمة -->
-                            <div id="modal-edit-task" class="modal2">
-                                <div class="modal-content2">
-                                    <span>الرجاء إدخال الاسم الجديد للمهمة:</span>
-                                    <input type="text" id="edit-task-name" placeholder="اسم المهمة الجديد">
-                                    <button id="edit-task-ok-button">تعديل</button>
-                                    <button id="edit-task-cancel-button">إلغاء</button>
-                                </div>
-                            </div>
-
-                            ${task.isDone?`
-                                <button onclick="toggleTaskCompletion(${index})" class="circular" style="border:2px solid rgb(118,0,101);">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
-                                </svg>
-
-                                </button>
-                            `:`
-                                <button onclick="toggleTaskCompletion(${index})" class="circular" style="border:2px solid green;">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-                                </svg>
-                                </button>
-                            `}
-                    
-                            <button onclick="deleteTask(${index})" class="circular" style="border:2px solid red;">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                                </svg>
-                            </button>
-
-                            <!-- قائمة منبثقة للحذف -->
-                            <div id="modal2" class="modal2">
-                                <div class="modal-content2">
-                                    <span>هل ترغب في حذف هذه المهمة؟</span>
-                                    <button id="ok-button2">نعم</button>
-                                    <button id="cancel-button2">إلغاء</button> <!-- زر الإلغاء -->
-                                </div>
-                            </div>
-
-                        </div>
-                    <!--#task actions delete done edit#-->
-                    </div>
-                <!--#Task#-->
-
-            `
-            document.getElementById("tasks").innerHTML += content
-            index++;
-    }
-    }
-
-    fillTaskOnThePage()
-    //النافذة المنبثقة التي ستظهر للمستخدم هي واجهة رسومية سنقوم بترجمتها الى كود ومعلومات برمجية يعني الى تمثيل
-    document.getElementById("add-button").addEventListener("click",function(){
-        // alert("")
-        // let taskName = prompt(" ادخل اسم المهمة الى القائمة:")
-        // //هذه الدالة لها قيمة مرجعة بالقيمة التي قمنا بادخالها فقمنا بتخزينها داخل متغير وطباعتها
-        // console.log(taskName)
-
-        // let now = new Date() //لانشاء متغير من الكلاس لازم نستخدم كلمة محجوزة new
-        // let date = now.getDate() + "-" + (now.getMonth()+1) + "-" + now.getFullYear() + "|" + now.getHours() +":"+ now.getMinutes()
-        // let taskObj = {
-        //     "title":taskName,
-        //     "date": date,
-        //     "isDone":false
-        // }
-
-        // myTasks.push(taskObj)
-        // fillTaskOnThePage()
-        document.getElementById("modal").style.display = "flex";
-    })
-
-    document.getElementById("ok-button").addEventListener("click", function() {
-    let taskName = document.getElementById("task-name").value;
-    if (taskName) {
-        console.log(taskName);
-        let now = new Date();
-        let date = now.getDate() + "-" + (now.getMonth()+1) + "-" + now.getFullYear() + "|" + now.getHours() + ":" + now.getMinutes();
-        
-        let taskObj = {
-            "title": taskName,
-            "date": date,
-            "isDone": false
-        };
-
-        myTasks.push(taskObj);
-
-        //تخزين المهام في الذاكرة المحلية وهي ذاكرة الجهاز
-        //توفر لغة الجفا سكربت دالة لفعل ذلك  the parameter to this function is key and value
-        storeTask()
-        console.log(localStorage.getItem("tasks"));
-        fillTaskOnThePage();
-        // إغلاق النافذة بعد إضافة المهمة
-        document.getElementById("modal").style.display = "none";
-    } else {
-        // alert("من فضلك، أدخل اسم المهمة.");
-             // إظهار النافذة المنبثقة
-        document.getElementById("error-modal").style.display = "flex";
-    }
-    document.getElementById("task-name").value = ""
-});
-    // عند الضغط على زر "إلغاء"
-    document.getElementById("cancel-button").addEventListener("click", function() {
-    document.getElementById("modal").style.display = "none"; // إخفاء النافذة
-    document.getElementById("task-name").value = ""; // تفريغ الحقل
-});
-
-// إغلاق النافذة عند الضغط على زر "ok"
-document.getElementById("close-error-modal").addEventListener("click", function() {
-    document.getElementById("error-modal").style.display = "none";
-});
-
-//delete function
-// function deleteTask(index){
-//     let task = myTasks[index]
-//     let isConfirm = confirm("هل ترغب في حذف مهمة:" + task.title)
-//     if(isConfirm){
-//         myTasks.splice(index,1)
-//         fillTaskOnThePage()
-//     }
-// }
-
-function deleteTask(index) {
-    // الحصول على العناصر المطلوبة
-    let modal = document.getElementById("modal2");
-    let okButton = document.getElementById("ok-button2");
-    let cancelButton = document.getElementById("cancel-button2");
-    let modalMessage = modal.querySelector("span");
-
-    // تحديث الرسالة داخل القائمة المنبثقة
-    modalMessage.textContent = `هل ترغب في حذف هذه المهمة: "${myTasks[index].title}"؟`;
-
-    // عرض القائمة المنبثقة
-    modal.style.display = "flex";
-
-    // عند النقر على زر "نعم"
-    okButton.onclick = function () {
-        myTasks.splice(index, 1); // حذف المهمة من المصفوفة
-        storeTask()
-        console.log(localStorage.getItem("tasks"));
-        modal.style.display = "none"; // إخفاء القائمة المنبثقة
-        fillTaskOnThePage(); // تحديث العرض
-    };
-
-    // عند النقر على زر "إلغاء"
-    cancelButton.onclick = function () {
-        modal.style.display = "none"; // إخفاء القائمة المنبثقة
-    };
-}
-
-// إغلاق القائمة المنبثقة عند النقر خارجها
-window.onclick = function (event) {
-    let modal = document.getElementById("modal2");
-    if (event.target === modal) {
-        modal.style.display = "none";
-    }
-};
-
-
-//editFunction
-
-// function editTask(index){
-//     let task = myTasks[index]
-//     let newTaskTitle = prompt("الرجاء ادخال الاسم الجديد للمهمة" + task.title) 
-//     task.title = newTaskTitle
-//     fillTaskOnThePage()
-// }
-
-
-// فتح نافذة التعديل للمهمة عند الضغط على زر التعديل
-function editTask(index) {
-    let task = myTasks[index];
-    
-    // عرض النافذة المنبثقة للتعديل
-    let modal = document.getElementById("modal-edit-task");
-    let editInput = document.getElementById("edit-task-name");
-    editInput.value = task.title; // تعبئة الحقل بالعنوان الحالي للمهمة
-    
-    modal.style.display = "flex";
-
-    // عندما يضغط المستخدم على زر "تعديل"
-    document.getElementById("edit-task-ok-button").addEventListener("click", function() {
-        let newTaskTitle = editInput.value.trim();
-        if (newTaskTitle) {
-            task.title = newTaskTitle;
-            storeTask()
-            console.log(localStorage.getItem("tasks"));
-            fillTaskOnThePage();  // لتحديث قائمة المهام على الصفحة
-            modal.style.display = "none";  // إغلاق النافذة
-        } else {
-            alert("من فضلك، أدخل اسم المهمة.");
-        }
-    });
-
-    // عند الضغط على زر "إلغاء"
-    document.getElementById("edit-task-cancel-button").addEventListener("click", function() {
-        modal.style.display = "none";  // إغلاق النافذة
-    });
-
-    // إغلاق النافذة عند النقر خارجها
-    window.onclick = function(event) {
-        if (event.target === modal) {
-            modal.style.display = "none";
-        }
-    };
-}
-//لازم اسم الدالة يدل على المهمة التي ستقوم بتنفيذها
-function toggleTaskCompletion(index){
-    let task = myTasks[index]
-    // if(task.isDone){
-    //     task.isDone = false
-    // }else{
-    //     task.isDone = true
-    // }
-    //اختصار للكود السابق 
-    //لو كانت المهمة عند الضغط على الزر صح فحولها لخطأ والعكس
-    task.isDone = !task.isDone
-    storeTask()
-    console.log(localStorage.getItem("tasks"));
-    fillTaskOnThePage()
-}
-
-
- //========================Local Storage========================
- try {
-    function storeTask() {
-        let tasksString = JSON.stringify(myTasks);
-        localStorage.setItem("tasks", tasksString);
-    }
-
-    console.log("localStorage works!");
-
-    window.onload = function() {
-        storeTask();
-        fillTaskOnThePage();
-    };
-
-} catch (e) {
-    console.error("localStorage error:", e);
-}
-
-</script>
+    <script src="main.js"></script>
+  </body>
 </html>
